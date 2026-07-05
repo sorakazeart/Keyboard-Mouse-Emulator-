@@ -66,11 +66,18 @@ It was rigorously tested against aggressive anti-cheat engines (specifically **G
 
 ---
 
-## ⚙️ Technical Requirements & Setup
+### ⚙️ Technical Requirements & Setup
 
 - **Software:** [AutoHotkey v2](https://www.autohotkey.com/v2/) (The script will not work on v1.1).
 - **Operating System:** Windows 10 or Windows 11.
 - **Hardware:** Any standard USB or laptop keyboard with Arrow Keys, PgUp, and PgDn.
+
+---
+### 🎮 How to Activate the Script
+To turn the script ON or OFF at any time:
+**Double-tap the ` (Backtick) key** (The key directly to the left of the `1` key on your keyboard).
+*Note: A ToolTip will appear in the top-left corner of your screen confirming the mode is active.*
+---
 
 **Crucial Setup Step (Required for Games):**
 1. After downloading the `.ahk` file, **right-click it** and select **Properties**.

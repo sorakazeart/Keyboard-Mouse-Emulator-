@@ -99,9 +99,8 @@ It was rigorously tested against aggressive anti-cheat engines (specifically **G
 1. Click the green **"Code"** button at the top-right of this repository.
 2. Select **"Download ZIP"**.
 3. Extract the ZIP folder anywhere on your PC.
-4. Run `ArrowMousePro.ahk`.
+4. Run `KME_Arrow.ahk`.
 
-*(Alternatively, you can simply copy the raw text of the `.ahk` file directly into a new Notepad window, save it as `ArrowMousePro.ahk`, and run it instantly).*
 
 ---
 

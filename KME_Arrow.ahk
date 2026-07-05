@@ -1,25 +1,39 @@
 #Requires AutoHotkey v2.0
 
-; --- POPUP KILLER (v2 Compliant) ---
-A_HotkeyInterval := 0     ; Completely disables the check interval
+; --- POPUP KILLER (Do NOT touch these lines) ---
+; These lines stop the annoying "Too many hotkeys" error popups.
+A_HotkeyInterval := 0 ; Completely disables the check interval
 A_MaxHotkeysPerInterval := 1000 ; Sets the max limit high enough to never trigger
 
 ; This is the "Nuclear Option" for v2 to stop timer warnings
 A_MaxHotkeysPerInterval := 1000
 
-; --- SETTINGS ---
-global Toggle := false
+; --- USER SETTINGS (CHANGE THESE TO YOUR PREFERENCE) ---
+
+; Change "10" to any number if you want the cursor to move faster or slower globally.
 global MouseSpeed := 10
 
-; --- SEPARATE SPEED TWEAKERS ---
-global CursorSpeedMult := 10   ; <-- Lower = Slower desktop cursor
-global CameraSpeedMult := 35   ; <-- Higher = Faster in-game camera
+; ============================================================
+; --SEPPARATE SPEED TWEAKERS-- (The most important settings for you!)
+; ============================================================
+; 1. To change how fast the cursor moves on your Desktop/Menus, change the 10 below.
+global CursorSpeedMult := 10   ; <-- Lower = Slower desktop cursor | Higher = Faster
 
+; 2. To change how fast the camera rotates in Games, change the 35 below.
+global CameraSpeedMult := 35   ; <-- Lower = Slower camera | Higher = Faster game camera
+
+; ============================================================
+; END OF USER SETTINGS
+; ============================================================
+
+
+; --- SYSTEM VARIABLES (DO NOT TOUCH) ---
+global Toggle := false
 global dirX := 0
 global dirY := 0
 global moving := false
 
-; Read Windows mouse speed
+; Read your system's real mouse speed from Windows Registry
 try {
     MouseSpeed := RegRead("HKCU\Control Panel\Mouse", "MouseSpeed")
     if (MouseSpeed <= 0)
@@ -28,9 +42,11 @@ try {
     MouseSpeed := 10
 }
 
+; This removes the Windows "holding pause" so keys respond instantly.
 SetKeyDelay(-1, -1)
 
-; --- Double-tap ` (Backtick) Toggle ---
+; --- DOUBLE-TAP ` (Backtick) TOGGLE ---
+; This block handles the Double-tap feature to turn the script ON/OFF.
 global ToggleTimer := 0
 `:: {
     global Toggle, ToggleTimer
@@ -38,7 +54,7 @@ global ToggleTimer := 0
         SetTimer(ToggleTimerFunc, 0)
         ToggleTimer := 0
         Toggle := !Toggle
-        ToolTip(Toggle ? "Mouse Mode: ON`nArrows=Move, PgUp=Drag, Alt+Click=Lock" : "Mouse Mode: OFF", 10, 10)
+        ToolTip(Toggle ? "Mouse Mode: ON`nArrows=Move, PgUp=Drag, PgDn=R-Click" : "Mouse Mode: OFF", 10, 10)
         SetTimer(() => ToolTip(), -2000)
         return
     }
@@ -46,6 +62,7 @@ global ToggleTimer := 0
     SetTimer(ToggleTimerFunc, -250)
 }
 
+; If you only pressed ` once, it types a backtick character normally.
 ToggleTimerFunc() {
     global ToggleTimer
     if (ToggleTimer > 0) {
@@ -54,7 +71,7 @@ ToggleTimerFunc() {
     }
 }
 
-; --- Speed Calculations ---
+; --- SPEED CALCULATIONS (DO NOT CHANGE) ---
 MoveAmount := 10 * MouseSpeed / 10
 if (MoveAmount < 5)
     MoveAmount := 5
@@ -62,10 +79,10 @@ if (MoveAmount < 5)
 CursorSpeed := MoveAmount * CursorSpeedMult / 10
 CameraSpeed := MoveAmount * CameraSpeedMult / 10
 
-; --- Arrow Hotkeys (Press) ---
+; --- ARROW HOTKEYS (PRESS) ---
+; This tells the script "An arrow key has been pressed."
 #HotIf Toggle
 
-; Note: We removed the ~ because Alt will now handle the pass-through
 *Up:: {
     global dirY := -CursorSpeed
     global moving := true
@@ -86,7 +103,8 @@ CameraSpeed := MoveAmount * CameraSpeedMult / 10
     global moving := true
 }
 
-; --- Arrow Hotkeys (Release - DRIFT FIX) ---
+; --- ARROW HOTKEYS (RELEASE) ---
+; This tells the script "The arrow key has been let go."
 *Up Up:: {
     global dirY := 0
     global moving := false
@@ -107,7 +125,8 @@ CameraSpeed := MoveAmount * CameraSpeedMult / 10
     global moving := false
 }
 
-; --- Action Timer (Dynamic speed switcher) ---
+; --- ACTION TIMER (DO NOT CHANGE) ---
+; This invisible timer runs constantly and does the actual mouse movement.
 SetTimer(MoveTimer, 15)
 
 MoveTimer() {
@@ -118,31 +137,35 @@ MoveTimer() {
     x := dirX
     y := dirY
 
-    ; SAFETY CHECK
+    ; Safety check
     if (x = 0 && y = 0)
         return
-if GetKeyState("Ctrl", "P") {
-    x := x / 2  ; Cut speed in half
-    y := y / 2
-}
 
-    ; Determine which speed to use based on Alt being held
+    ; --- PRECISION MODE ---
+    ; If you hold CTRL while moving, the speed is cut in half.
+    if GetKeyState("Ctrl", "P") {
+        x := x / 2
+        y := y / 2
+    }
+
+    ; --- TURBO MODE ---
+    ; If you hold ALT while moving, it uses the faster CameraSpeed.
     if GetKeyState("Alt", "P") {
-        ; ALT HELD: Use FAST Camera Speed for RAW signals
         altX := (x > 0 ? CameraSpeed : -CameraSpeed)
         altY := (y > 0 ? CameraSpeed : -CameraSpeed)
         
-        ; Move desktop cursor (still uses slow speed)
-        MouseMove(x, y, 0, "R")
-        ; Send raw camera signal (uses fast speed)
-        DllCall("mouse_event", "UInt", 0x0001, "Int", altX, "Int", altY, "UInt", 0, "UInt", 0)
+        MouseMove(x, y, 0, "R")                 ; Move desktop cursor
+        DllCall("mouse_event", "UInt", 0x0001, "Int", altX, "Int", altY, "UInt", 0, "UInt", 0) ; Move game camera
     } else {
-        ; NO ALT: Use normal CursorSpeed for everything
+        ; --- NORMAL MODE ---
+        ; If neither CTRL nor ALT is held, it moves at the standard speed.
         MouseMove(x, y, 0, "R")
         DllCall("mouse_event", "UInt", 0x0001, "Int", x, "Int", y, "UInt", 0, "UInt", 0)
     }
 
-    ; Drag handling
+    ; --- DRAG MODE ---
+    ; If you hold PgUp while moving, it holds down the left mouse button (Drag).
+    ; If you let go of PgUp, it releases the left mouse button.
     if GetKeyState("PgUp", "P") {
         Click("Down")
     } else {
@@ -150,8 +173,8 @@ if GetKeyState("Ctrl", "P") {
     }
 }
 
-; --- Page Up / Down clicks ---
-; Because Alt is now a modifier in the timer, these clicks act completely independently
+; --- PAGE UP / DOWN CLICKS ---
+; These are the standard Left and Right click buttons.
 PgUp::Click("Left")
 PgDn::Click("Right")
 

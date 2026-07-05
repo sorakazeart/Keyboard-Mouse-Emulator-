@@ -100,7 +100,8 @@ It was rigorously tested against aggressive anti-cheat engines (specifically **G
 2. Select **"Download ZIP"**.
 3. Extract the ZIP folder anywhere on your PC.
 4. Run `KME_Arrow.ahk`.
-| **You must download AutoHotKey V2 for script to work.**
+
+| ⚠️ **Note:** *You must have [AutoHotkey v2](https://www.autohotkey.com/v2/) installed for the script to function. It will not run on AutoHotkey v1.1. And you wont be able to use the script otherwise :)*
 
 ---
 
@@ -111,6 +112,28 @@ It does not read your system memory, does not interact with Genshin's file struc
 *Note: Because the movement is mathematically straight and consistent, Cloudflare or reCAPTCHA might flag it as a "robot". This is expected; simply toggle the script off (double-tap `` ` ``) to solve a CAPTCHA with your physical mouse, and toggle it back on afterwards.*
 
 ---
+## 📖 The Story Behind the Script (A 5 AM Victory)
+
+This script wasn't just written—it was **forged in frustration**. 
+
+It started late at night with a simple goal: *"I have a keyboard, I don't have a working mouse, and I want to play Genshin Impact."* What followed was over **10 major rewrites**, countless Google tabs, and a battle against every wall modern Windows gaming could throw at us.
+
+**The hurdles we cleared:**
+- **The DLL Nightmare:** We went down the rabbit hole of external drivers (`Interception`, `evilC`), only to discover that the script didn't need any of them.
+- **The JoyToKey Dead End:** We tried emulating a physical controller, but the software wanted hardware that didn't exist.
+- **The Phantom Diagonals:** Pressing Up would randomly lock Right. Pressing Right would unlock Down. The `SetTimer` loop was finally what cracked the deadlock.
+- **The Cursor Drift:** For a while, letting go of Left would cause the mouse to slowly slide off the screen. We engineered a 1-millisecond safety check to kill it permanently.
+- **The Popup Wars:** The script performed so fast that AutoHotkey v2 threw over 20 "Too many hotkeys" error boxes. We silenced them permanently with `A_HotkeyInterval := 0`.
+
+The breakthrough came when we realized the script didn't need *system-level bypasses*; it just needed **Administrator privileges** to talk to the game engine at eye-level.
+
+By 5:00 AM, the three-speed system was built, the camera was rotating in fullscreen mode, the drag-and-drop was pixel-perfect, and the cursor wasn't drifting anymore. I saved the file, looked at the clock, and finally felt confident enough to share it with the world.
+
+This is Iteration 50+. Across 10 to 12 major rewrites, we fought through DLL rabbit holes, pop-up wars, phantom diagonals, and cursor drift gremlins. What you're looking at isn't a quick copy-paste job; it's a battle-tested, drive-savaged, 5 AM miracle.
+
+We hope it serves you as well as it served me.
+
+----
 
 ## 🤝 Contributing & Evolution
 If you wish to fork this repository and modify it for your own specific ergonomic layout, feel free to do so. This project is open-source and built to help anyone who has a broken mouse, a laptop trackpad injury, or simply prefers keyboard-based navigation.

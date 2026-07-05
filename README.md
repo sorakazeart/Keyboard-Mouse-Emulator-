@@ -1,7 +1,7 @@
 # Keyboard-Mouse-Emulator-
 A driver-free AutoHotkey v2 script that turns arrow keys from keyboard into a mouse and game camera that runs on most games even if it has anti-cheat functions.
 
-#(v2) – Universal Keyboard-to-Mouse Emulator
+# KME_Arrow – Universal Keyboard-to-Mouse Emulator
 
 [![AHK v2](https://img.shields.io/badge/AutoHotkey-v2-blue)](https://www.autohotkey.com/v2/)
 [![Platform](https://img.shields.io/badge/Platform-Windows%2010%20%7C%2011-lightgrey)](https://www.microsoft.com/)
@@ -10,6 +10,22 @@ A driver-free AutoHotkey v2 script that turns arrow keys from keyboard into a mo
 **Arrow Mouse Pro** is a lightweight, driver-free, single-file AutoHotkey v2 script designed to transform your keyboard’s **Arrow Keys, Page Up, and Page Down** into a fully-fledged mouse replacement. 
 
 It works natively on Windows 10 and Windows 11 without requiring external drivers, hidden DLLs, or administrative installations (aside from the initial file permission setup). 
+
+---
+
+> **🏆 The Gold Standard of Keyboard-to-Mouse Scripts**  
+> While there are dozens of "Arrow Key Mouse" scripts scattered across the internet, almost all of them are broken, outdated, or cannot handle modern anti-cheat engines and fullscreen games. **This script is different.**  
+> It was built specifically to solve the issues that every other script ignored: the *fullscreen lock*, the *key deadlocks*, the *Pop-up warnings*, and the *cursor drift*.  
+> If you need a keyboard mouse emulator that *actually works* on Windows 10/11 today—without drivers, without DLLs, and without headaches—you just found it.
+
+---
+
+> **🔥 Why this script beats the rest**  
+> - ✅ **Fullscreen Support:** Works natively in games like Genshin Impact and Minecraft, *without* requiring borderless windowed mode. Most scripts fail here.  
+> - ✅ **Zero Drift:** The timer-based movement system ensures your cursor *never* randomly drifts left or right when you release a key.  
+> - ✅ **No Pop-Ups:** We permanently disabled the annoying AHK "Too many hotkeys" warning using `A_HotkeyInterval := 0`.  
+> - ✅ **True Drag Support:** Hold `PgUp` + Arrows. It drags. Release `PgUp` while moving. It stops. Instantly.  
+> - ✅ **Three Speeds:** Normal, Precision (Ctrl), and Turbo (Alt)—something you won't find in any other free script.
 
 ---
 

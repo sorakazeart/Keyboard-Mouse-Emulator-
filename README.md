@@ -100,7 +100,7 @@ It was rigorously tested against aggressive anti-cheat engines (specifically **G
 2. Select **"Download ZIP"**.
 3. Extract the ZIP folder anywhere on your PC.
 4. Run `KME_Arrow.ahk`.
-
+| **You must download AutoHotKey V2 for script to work.**
 
 ---
 
